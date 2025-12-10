@@ -1,0 +1,55 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # needed for "last updated" to work for doc pages
+      - name: Setup Tools
+        uses: jdx/mise-action@v3
+      - name: Install dependencies
+        run: bun install
+      - name: Lint
+        run: bun run lint
+      - name: Build
+        run: bun run build
+        env:
+          NEXT_PUBLIC_SITE_HOST: ${{ vars.SITE_HOST }}
+          NEXT_PUBLIC_PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_HOST }}
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: github-pages
+          path: ./out/
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+
+    permissions:
+      pages: write 
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
