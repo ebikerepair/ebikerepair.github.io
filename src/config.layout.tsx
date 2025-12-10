@@ -1,5 +1,3 @@
-import type { Route } from "next";
-
 import type { LinkItemType } from "fumadocs-ui/layouts/shared";
 
 import { FileTextIcon, HandHeartIcon, HandshakeIcon } from "lucide-react";

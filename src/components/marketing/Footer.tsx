@@ -1,4 +1,3 @@
-import type { Route } from "next";
 import type { CSSProperties, FunctionComponent, ReactNode } from "react";
 
 import { cn } from "fumadocs-ui/utils/cn";
@@ -8,10 +7,7 @@ import type { LucideIcon } from "lucide-react";
 
 import { docsSource } from "@/lib/content";
 
-import {
-  GitHubIcon,
-  InstagramIcon,
-} from "@/components/shared/icons";
+import { GitHubIcon, InstagramIcon } from "@/components/shared/icons";
 import { LogoText } from "@/components/shared/Logo";
 import { SafeLink } from "@/components/shared/SafeLink";
 
@@ -154,7 +150,8 @@ export const Footer: FunctionComponent<FooterProps> = ({ className }) => {
         </div>
 
         <p className="text-xs text-fd-muted-foreground/40">
-          &copy; {new Date().getFullYear()}. E-Bike Repair Industries. All rights reserved.
+          &copy; {new Date().getFullYear()}. E-Bike Repair Industries. All
+          rights reserved.
         </p>
       </div>
     </footer>
