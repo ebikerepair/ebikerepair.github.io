@@ -1,3 +1,4 @@
+import type { Route } from "next";
 import type { CSSProperties, FunctionComponent, ReactNode } from "react";
 
 import { cn } from "fumadocs-ui/utils/cn";
